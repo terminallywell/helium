@@ -359,6 +359,17 @@
  std::unique_ptr<views::Background> TabGroupStyle::GetEmptyTitleChipBackground(
 --- a/chrome/browser/ui/views/tabs/tab_group_underline.cc
 +++ b/chrome/browser/ui/views/tabs/tab_group_underline.cc
+@@ -29,7 +29,9 @@
+ TabGroupUnderline::TabGroupUnderline(TabGroupViews* tab_group_views,
+                                      const tab_groups::TabGroupId& group,
+                                      const TabGroupStyle& style)
+-    : tab_group_views_(tab_group_views), group_(group), style_(style) {}
++    : tab_group_views_(tab_group_views), group_(group), style_(style) {
++  SetCanProcessEventsWithinSubtree(false);
++}
+ 
+ void TabGroupUnderline::OnPaint(gfx::Canvas* canvas) {
+   SkPath path = style_->GetUnderlinePath(GetLocalBounds());
 @@ -80,10 +80,7 @@ gfx::Rect TabGroupUnderline::CalculateTa
    gfx::Rect group_bounds = ToEnclosingRect(leading_bounds);
    group_bounds.UnionEvenIfEmpty(ToEnclosingRect(trailing_bounds));
